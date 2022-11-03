@@ -1,39 +1,34 @@
-import React from 'react';
-// import logo from './logo.svg';
 import './App.css';
-import './Components/BikesJsx';
-// import BikesJsx from './Components/BikesJsx';
-// import Button from './Components/Button/Button';
-// import Counter from './Components/Counter/Counter';
 import Navbar from './Components/Navbar/Navbar';
 import ItemListContainer from './Components/ItemListContainer/ItemListContainer';
 import ItemDetailContainer from './Components/ItemDetailContainer/ItemDetailContainer';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import Cart from './Components/Cart/Cart'
+import Checkout from './Components/Checkout/Checkout';
 
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { CartContextProvider } from './Context/CartContext';
+import { NotificationProvider } from './notification/Notification';
 
 function App() {
   // const [page, setPage] = useState('list')
 
   return (
     <div className="App">
-      {/* <div>
-        <button onClick={() => setPage('list')}>listado</button>
-        <button onClick={() => setPage('detail')}>detalle</button>
-      </div>
-      {page === 'list' && <ItemListContainer greeting="Bienvenidos a mi Ecommerce"/>}
-      {page === 'detail' && <ItemDetailContainer /> } */} 
-      <BrowserRouter>
+    <NotificationProvider>
+     <CartContextProvider>
+       <BrowserRouter>
         <Navbar />
-        {/*<div>
-          <Link to='/'>Productos</Link>
-          <Link to='/detail'>Detalle</Link>
-    </div> */}
         <Routes>
-          <Route path='/' element={<ItemListContainer />}/>
-          <Route path='/category/:categoryId' element={<ItemListContainer />}/>
-          <Route path='/detail/:productId' element={<ItemDetailContainer />}/>
+        <Route path='/' element={<ItemListContainer greeting='Todas nuestras Bikes'/>}/>
+        <Route path='/category/:categoryId' element={<ItemListContainer greeting='Lista de '/>} />
+        <Route path='/detail/:productId' element={<ItemDetailContainer />} />  
+        <Route path='/cart' element={<Cart />} />
+        <Route path='/checkout' element={<Checkout />} />
+        <Route path='*' element={<h1>404 NOT FOUND</h1>} />  
         </Routes>
-      </BrowserRouter>
+       </BrowserRouter>
+      </CartContextProvider>
+     </NotificationProvider>
     </div>
   );
 }

@@ -1,26 +1,46 @@
-import './Navbar.css';
-import CartWidget from '../CartWidget/CartWidget';
-import { Link } from 'react-router-dom';
+import CartWidget from '../CartWidget/CartWidget'
+import { useState, useEffect } from 'react'
+import './Navbar.css'
+import { Link, NavLink, useLocation } from 'react-router-dom'
+import { collection, getDocs, query } from 'firebase/firestore'
+import { db } from '../../service/firebase'
 
-const Navbar = () => {
+const NavBar = () => {
+  const [categories, setCategories] = useState([])
 
-    return(
-      <nav className="NavBar" >
-          <div className='NavBar'>
-            <Link to='/'>
-              <h3>Tu Ruta Bike</h3>
-            </Link>
-          </div>
-          <div className="Categories">
-              <Link to='/category/santacruz' className="Option">Santa Cruz</Link>
-              <Link to='/category/trek' className="Option">Trek</Link>
-              <Link to='/category/juliana' className="Option">Juliana</Link>
-          </div>
-        <div>
-            <CartWidget />
+  useEffect(() => {
+    const collectionRef = query(collection(db, 'categories'))
+
+    getDocs(collectionRef).then(response => {
+      console.log(response)
+
+      const categoriesAdapted = response.docs.map(doc => {
+        const data = doc.data()
+        return { id: doc.id, ...data}
+      })
+
+      setCategories(categoriesAdapted)
+    })
+  }, [])
+
+  console.log(categories)
+
+  return (
+    <nav className="NavBar" >
+        <Link to='/'>
+          <h3 className='WebTitle'>TuRutaBike</h3>
+        </Link>
+        <div className="Categories">
+            { categories.map(cat => (
+                <NavLink key={cat.id} to={`/category/${cat.slug}`} className={({isActive}) => isActive ? 'ActiveOption' : 'Option'}>{cat.label}</NavLink>
+            ))}
+            {/* <Navlink to='/category/santacruz' className="Option">Santa Cruz</Navlink>
+              <Navlink to='/category/trek' className="Option">Trek</Navlink>
+              <Navlink to='/category/juliana' className="Option">Juliana</Navlink> */}
         </div>
-        </nav>
-    )
+        <CartWidget />
+    </nav>
+  )
 }
 
-export default Navbar
+export default NavBar
