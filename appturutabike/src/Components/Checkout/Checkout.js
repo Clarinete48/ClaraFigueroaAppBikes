@@ -15,7 +15,7 @@ const Checkout = () => {
                 buyer: {
                     name: 'Clara Figueroa',
                     phone: '964843665',
-                    email: 'contacto@mturutabike.cl'
+                    email: 'clara@turutabike.cl'
                 },
                 items: cart,
                 total

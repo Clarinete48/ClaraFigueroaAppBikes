@@ -26,7 +26,7 @@
     width: auto;
     padding: 12px;
     font-size: 12px;
-    background: #000000;
+    background: #d4a300;
     border-radius: 8px;
     flex: none;
     display: flex;
@@ -36,7 +36,7 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    color: #ffffff;
+    color: #070707;
     border: none;
     border-style: none;
     cursor: pointer;
@@ -51,7 +51,7 @@
     width: auto;
     padding: 12px;
     font-size: 15px;
-    background: rgb(0, 146, 146);
+    background: #ffc400;
     border-radius: 8px;
     flex: none;
     display: flex;
@@ -61,7 +61,7 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    color: #FFFFFF;
+    color: #000000;
     border: none;
     border-style: none;
     cursor: pointer;
