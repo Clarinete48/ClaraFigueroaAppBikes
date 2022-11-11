@@ -2,6 +2,7 @@ import { useState, useContext } from "react"
 import { CartContext } from "../../Context/CartContext"
 import { getDocs, addDoc, collection, doc, updateDoc, where, query, documentId, writeBatch } from 'firebase/firestore'
 import { db } from '../../service/firebase'
+import { useForm } from "react-hook-form"
 
 const Checkout = () => {
     const [loading, setLoading] = useState(false)
@@ -71,8 +72,27 @@ const Checkout = () => {
     return (
         <>
             <h1>Checkout</h1>
-            <button onClick={createOrder}>Agregar documento</button>
-            
+            <form>
+    <div>
+        <label>
+        Nombre:
+        <input type="text" name="name" />
+        </label>
+        </div>
+    <div>
+        <label>
+        Fono:
+        <input type="number" name="phone" />
+        </label>
+    </div>
+        <div>
+        <label>
+        Email:
+        <input type="text" name="email" />
+        </label>  
+    </div>
+</form>
+    <button onClick={createOrder}>Agregar documento</button>     
         </>
     )
 }
