@@ -13,15 +13,10 @@ const Checkout = () => {
         setLoading(true)
         try {
             const objOrder = {
-                buyer: {
-                    name: 'Clara Figueroa',
-                    phone: '964843665',
-                    email: 'clara@turutabike.cl'
-                },
+                buyer: contactForm,
                 items: cart,
                 total
-            }
-    
+            }                                                                                    
             console.log(objOrder)
     
             const ids = cart.map(prod => prod.id)
@@ -69,30 +64,62 @@ const Checkout = () => {
         return <h1>Generando orden...</h1>
     }
 
+    const form = document.getElementById('contactForm'); 
+
+    if(form){ 
+      form.addEventListener('createOrder', contactForm);
+    }
+
+    function contactForm(event) {
+      event.preventDefault(); 
+      const nombre = document.getElementById('nombre');
+      event.preventDefault(); 
+      const phone = document.getElementById('phone');
+      const email = document.getElementById('email');
+      const buyer = {
+        'name': nombre.value,
+        'phone': phone.value,
+        'email': email.value,
+      }; 
+      saveContactForm(buyer);
+      form.reset(); // borrar campos. 
+    }
+
+  function saveContactForm(buyer) {
+    orders.database().ref('contact').push(buyer)
+      .then(function(){
+        alert('orden enviada'); 
+      })
+      .catch(function(){
+        alert('orden no enviada'); 
+      });
+  }
+
+
     return (
-        <>
-            <h1>Checkout</h1>
-            <form>
-    <div>
+    <>
+    <h1>Checkout</h1>
+      <form id="contactForm">
+      <div>
         <label>
         Nombre:
         <input type="text" name="name" />
         </label>
         </div>
-    <div>
+      <div>
         <label>
         Fono:
         <input type="number" name="phone" />
         </label>
-    </div>
+      </div>
         <div>
         <label>
         Email:
         <input type="text" name="email" />
         </label>  
-    </div>
-</form>
-    <button onClick={createOrder}>Agregar documento</button>     
+      </div>
+      </form>
+    <button onClick={createOrder}>Generar orden</button>     
         </>
     )
 }
